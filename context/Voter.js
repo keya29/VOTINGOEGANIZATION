@@ -8,7 +8,25 @@ import { useRouter } from "next/router";
 //INTERNAL IMPORT
 import { VotingAddress, VotingAddressABI } from "./constants";
 
-const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
+// const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
+
+const projectId = "PROJECT IT";
+const projectSecretKey = "SECRECT KEY";
+const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString(
+  "base64"
+)}`;
+
+const subdomain = "SUBDOMAIn";
+
+const client = ipfsHttpClient({
+  host: "infura-ipfs.io",
+  port: 5001,
+  protocol: "https",
+  headers: {
+    authorization: auth,
+  },
+});
+
 
 const fetchContract = (signerOrProvider) =>
   new ethers.Contract(VotingAddress, VotingAddressABI, signerOrProvider);
@@ -66,7 +84,7 @@ export const VotingProvider = ({ children }) => {
     try {
       const added = await client.add({ content: file });
 
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `${subdomain}/ipfs/${added.path}`;
 
       // setImage(url);
       return url;
@@ -80,7 +98,7 @@ export const VotingProvider = ({ children }) => {
     try {
       const added = await client.add({ content: file });
 
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `${subdomain}/ipfs/${added.path}`;
       console.log(url);
       return url;
     } catch (error) {
@@ -104,7 +122,7 @@ export const VotingProvider = ({ children }) => {
     const data = JSON.stringify({ name, address, position, image: fileUrl });
     const added = await client.add(data);
 
-    const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+    const url = `${subdomain}/ipfs/${added.path}`;
 
     const voter = await contract.voterRight(address, name, url, fileUrl);
     voter.wait();
@@ -180,7 +198,7 @@ export const VotingProvider = ({ children }) => {
     });
     const added = await client.add(data);
 
-    const ipfs = `https://ipfs.infura.io/ipfs/${added.path}`;
+    const ipfs = `${subdomain}/ipfs/${added.path}`;
 
     const candidate = await contract.setCandidate(
       address,
