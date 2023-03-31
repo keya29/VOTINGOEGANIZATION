@@ -17,11 +17,5 @@ module.exports = {
           : [],
     },
   },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
-  },
-  etherscan: {
-    apiKey: "WCEZKZEQUBKEFBU32GJYYV7F9YM8G3HJEG",
-  },
+ 
 };
