@@ -1,7 +1,7 @@
 /** @format */
 
 import Stylee from '../components/card/card.module.css';
-import candidate from './candidate.png';
+import jahnavi from '../assets/jahnavi.jpg';
 
 /** @format */
 
@@ -51,7 +51,7 @@ const card = () => {
           </div>
           <div className={Style.winner_message}>
             <small>
-              <Countdown date={Date.now() + 10} />
+              <Countdown date={Date.now() + 10000} />
             </small>
           </div>
         </div>
@@ -60,16 +60,16 @@ const card = () => {
       <div className={Stylee.card}>
         <div className={Stylee.card_box}>
           <div className={Stylee.image}>
-            <img
-              src={candidate}
+            <Image
+              src={jahnavi}
               alt="Profile photo"
             />
           </div>
 
           <div className={Stylee.card_info}>
-            <h2>Kenil #1</h2>
-            <p>25</p>
-            <p>Address: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266</p>
+            <h2>Jahnavi</h2>
+            <p>22</p>
+            <p>Address: 0xc59e2441bD6b8b47E207E4cD40EbD0CD35c85aaF</p>
             <p className={Stylee.total}>Total Vote</p>
           </div>
 
@@ -78,7 +78,7 @@ const card = () => {
           </div>
 
           <div className={Stylee.card_button}>
-            This Candidate is the winner
+            This Candidate is the Winner
             {/* <button
               onClick={() =>
                 giveVote({ id: el[2].toNumber(), address: el[6] })
