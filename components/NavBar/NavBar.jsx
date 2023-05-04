@@ -1,24 +1,45 @@
 import React, { useState, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {useNavigate} from "react-router-dom"
 import { AiFillLock, AiFillUnlock } from "react-icons/ai";
-
+import { useEffect } from "react";
 //INTERNAL IMPORT/
 import { VotingContext } from "../../context/Voter";
 import Style from "./NavBar.module.css";
 import loding from "../../loding.gif";
+import { useRouter } from 'next/router';
+
 
 const NavBar = () => {
+const router = useRouter();
   const { connectWallet, error, currentAccount } = useContext(VotingContext);
   const [openNav, setOpenNav] = useState(true);
+  const [admin, setAdmin] = useState(false);
 
-  const openNaviagtion = () => {
+
+  const openNaviagtion = async() => {
+  
+    console.log(currentAccount);
     if (openNav) {
       setOpenNav(false);
     } else if (!openNav) {
       setOpenNav(true);
     }
   };
+  async function checkAdmin() {
+    if (currentAccount == 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+      router.push('/candidate-regisration')
+    else
+      alert("You are not admin, Please Switch to address 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+  }
+
+   async function checkVoter() {
+    if (currentAccount == 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+      router.push('/allowed-voters')
+    else
+      alert("You are not admin, Please Switch to address 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+  }
   return (
     <div className={Style.navbar}>
       {error === "" ? (
@@ -55,25 +76,32 @@ const NavBar = () => {
                 )}
               </div>
 
-              {openNav && (
+              {openNav  && (
                 <div className={Style.navigation}>
                   <p>
                     <Link href={{ pathname: "/" }}>Home</Link>
                   </p>
-
-                  <p>
-                    <Link href={{ pathname: "candidate-regisration" }}>
-                      Candidate Registraction
-                    </Link>
+                  <>
+                    <p>
+                   
+                        <button onClick={checkAdmin} >
+                          Candidate Registraction
+                        </button>
+                      
                   </p>
                   <p>
-                    <Link href={{ pathname: "allowed-voters" }}>
-                      Voter Registraction
-                    </Link>
+                    <button onClick={checkAdmin}>
+                      Voter Registration
+                   </button>
                   </p>
-
+                      
+                  </>
                   <p>
+                      
                     <Link href={{ pathname: "voterList" }}>Voter Lsit</Link>
+                  </p>
+                      <p>
+                    <Link href={{ pathname: "winners" }}>Winner</Link>
                   </p>
                 </div>
               )}
